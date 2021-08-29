@@ -17,8 +17,11 @@ public final class UserId {
     }
 
     private void ensureIsValidUUID(final String id) throws IllegalArgumentException {
-        //TODO: Throw domain exception
-        UUID.fromString(id);
+        try {
+            UUID.fromString(id);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid userId");
+        }
     }
 
 }

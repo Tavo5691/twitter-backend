@@ -1,11 +1,12 @@
 package com.clone.twitterbackend.users.infrastructure.http;
 
-import com.clone.twitterbackend.users.application.create.UserRegistrar;
+import com.clone.twitterbackend.users.application.register.UserRegistrar;
 import com.clone.twitterbackend.users.domain.Email;
 import com.clone.twitterbackend.users.domain.UserId;
 import com.clone.twitterbackend.users.domain.Username;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public final class UsersPostController {
 
     private final UserRegistrar registrar;
+    private final PasswordEncoder encoder;
 
-    public UsersPostController(UserRegistrar registrar) {
+    public UsersPostController(UserRegistrar registrar, PasswordEncoder encoder) {
         this.registrar = registrar;
+        this.encoder = encoder;
     }
 
     @PostMapping("users/{id}")
@@ -27,7 +30,7 @@ public final class UsersPostController {
         final var email = new Email(request.getEmail());
 
         final var rawPassword = new RawPassword(request.getPassword());
-        final var securePassword = rawPassword.hash();
+        final var securePassword = rawPassword.hash(encoder);
 
         registrar.register(userId, username, email, securePassword);
 

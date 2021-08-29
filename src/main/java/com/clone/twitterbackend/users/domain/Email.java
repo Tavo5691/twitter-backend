@@ -1,5 +1,7 @@
 package com.clone.twitterbackend.users.domain;
 
+import java.util.regex.Pattern;
+
 public final class Email {
     private final String value;
 
@@ -14,6 +16,16 @@ public final class Email {
     }
 
     private void ensureIsValid(final String email) {
-        //TODO: Throw error in case is not
+        if (null == email || email.isBlank()) {
+            throw new RuntimeException("Email is required");
+        }
+
+        boolean isValid = Pattern.compile("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
+                .matcher(email)
+                .find();
+
+        if (!isValid) {
+            throw new RuntimeException("Invalid email");
+        }
     }
 }
