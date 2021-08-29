@@ -1,12 +1,14 @@
-package com.clone.twitterbackend.users.domain;
+package com.clone.twitterbackend.users.infrastructure.http;
 
-public class Password {
+import com.clone.twitterbackend.users.domain.SecurePassword;
+
+public final class RawPassword {
     public static final int MIN_LENGTH = 6;
     public static final int MAX_LENGTH = 20;
 
     private final String value;
 
-    public Password(String password) {
+    public RawPassword(String password) {
         if (password.isBlank()) {
             //
         }
@@ -22,7 +24,12 @@ public class Password {
         return value;
     }
 
-    private boolean isBetweenCharacterLimit(String password) {
+    private boolean isBetweenCharacterLimit(final String password) {
         return password.length() < MIN_LENGTH || password.length() > MAX_LENGTH;
+    }
+
+    public SecurePassword hash() {
+        // TODO
+        return null;
     }
 }

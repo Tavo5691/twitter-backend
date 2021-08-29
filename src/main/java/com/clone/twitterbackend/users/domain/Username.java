@@ -1,6 +1,6 @@
 package com.clone.twitterbackend.users.domain;
 
-public class Username {
+public final class Username {
     private final String value;
 
     public Username(String username) {

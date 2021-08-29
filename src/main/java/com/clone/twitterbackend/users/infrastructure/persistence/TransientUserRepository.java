@@ -6,7 +6,7 @@ import com.clone.twitterbackend.users.domain.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransientUserRepository implements UserRepository {
+public final class TransientUserRepository implements UserRepository {
     private List<User> users = new ArrayList<>();
 
     @Override
